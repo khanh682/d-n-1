@@ -1,6 +1,6 @@
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -23,13 +23,14 @@
             <div class="row mb menu">
                 <ul>
 
-                    <li><a href="index.php?pg=home">Trang chủ</a></li>
+                    <li><a href="">Trang chủ</a></li>
                     <li><a href="index.php?pg=danhmuc&action=list">Danh mục</a></li>
                     <li><a href="index.php?pg=sanpham&action=list">Hàng hóa</a></li>
-                    <li><a href="">Khách hàng</a></li>
+                    <li><a href="index.php?pg=nguoidung&action=list">Khách hàng</a></li>
                     <li><a href="">Bình luận</a></li>
                     <li><a href="">Thống kê</a></li>
                 </ul>
             </div>
+             <!--  <b><?= $username = strstr($email['email'], '@', true); ?></b>  --> <a href="index.php?pg=logout">Đăng xuất</a>
         </header>
     

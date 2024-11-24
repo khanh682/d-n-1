@@ -1,34 +1,45 @@
 <?php
-class SanPhamController{
+class SanPhamController
+{
+    public function __construct(){
+        if(!isset($_SESSION['email'])){
+            header("Location: index.php?pg=login");
+            exit;
+        }
+    }
     //Hiển thị dữ liệu
-    public function list(){
+    public function list()
+    {
         //Lấy dữ liệu sanpham từ models
         $sanphams = (new sanpham)->all();
         //render view
         view("admin/sanpham/list", ['sanphams' => $sanphams]);
     }
     //Thêm dữ liệu
-    public function add(){
+    public function add()
+    {
         //render view
         view("admin/sanpham/add");
     }
     //Lưu dữ liệu được thêm và data
-    public function store(){
+    public function store()
+    {
         $data = $_POST;
-        $anh="";//Nếu người dùng không nhập ảnh
-        $file_anh=$_FILES['anh'];
-        if($file_anh['size']>0){
-            $anh = "assets/img/" .$file_anh['name'];
+        $anh = ""; //Nếu người dùng không nhập ảnh
+        $file_anh = $_FILES['anh'];
+        if ($file_anh['size'] > 0) {
+            $anh = "assets/img/" . $file_anh['name'];
             //upload ảnh lên website
             move_uploaded_file($file_anh['tmp_name'], $anh);
         }
-        $data['anh']=$anh;
+        $data['anh'] = $anh;
         (new SanPham)->insert($data);
         header("Location: index.php?pg=sanpham&action=list");
         die;
     }
     //Cập nhật dữ liệu
-    public function edit() {
+    public function edit()
+    {
         // Check for POST request (updating product)
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $data = $_POST;
@@ -42,18 +53,18 @@ class SanPhamController{
             header("Location: index.php?pg=sanpham&action=list");
             die;
         }
-    
+
         // Fetch product data for editing
         $sanPham_id = $_GET['sanPham_id'] ?? null;
         if (!$sanPham_id) {
             die("Invalid product ID.");
         }
-    
+
         $sanpham = (new SanPham)->find_one($sanPham_id);
         if (!$sanpham) {
             die("Product not found.");
         }
-    
+
         // Pass data to view
         view("admin/sanpham/edit", ['sanpham' => $sanpham]);
     }
@@ -79,7 +90,8 @@ class SanPhamController{
         exit;
     }
     //Xoá dữ liệu
-    public function delete(){
+    public function delete()
+    {
         //lấy thông tin id trên URL
         $sanPham_id = $_GET['sanPham_id'];
         //xoá dữ liệu
@@ -89,4 +101,3 @@ class SanPhamController{
         die;
     }
 }
-?>
