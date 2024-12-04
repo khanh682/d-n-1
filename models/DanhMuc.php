@@ -8,8 +8,19 @@ class DanhMuc{
     }
 
     //hàm lấy dữ liệu
-    public function all(){
+    public function all()
+    {
         $sql = "SELECT * FROM danhmuc ORDER BY madm DESC";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public function numberofcategories(){
+        $sql = " SELECT dm.madm, dm.tendm, dm.hinhanh, SUM(sp.soLuong) AS tong_soluong, dm.status
+        FROM danhmuc dm
+        LEFT JOIN sanpham sp ON dm.madm = sp.madm
+        GROUP BY dm.madm, dm.tendm, dm.hinhanh
+        ORDER BY dm.madm ASC";
         $stmt =$this->conn->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC); 

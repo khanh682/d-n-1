@@ -1,14 +1,22 @@
 <?php
 class DanhMucController
 {
-
+    
+    public function __construct(){
+        if(!isset($_SESSION['email']) ){
+            header("Location: index.php?pg=login");
+            exit;
+        }
+    }
     //Hiển thị dữ liệu
     public function list()
-    {
+    {   
+        //Lấy thông tin của tài khoản đăng nhập
+        $email = $_SESSION['email'] ?? '';
         //Lấy dữ liệu danh mục từ models
         $danhmucs = (new DanhMuc)->all();
         //render view
-        view("admin/danhmuc/list", ['danhmucs' => $danhmucs]);
+        view("admin/danhmuc/list", ['danhmucs' => $danhmucs, 'email'=>$email]);
     }
     // Hiển thị tất cả các danh mục có trạng thái là hiển thị
     public function hien()

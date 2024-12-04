@@ -19,6 +19,7 @@
                         <th>HÌNH ẢNH</th>
                         <th>ID DM</th>
                         <th>ẨN/HIỆN</th>
+                        <th>LƯỢT XEM</th>
                     </tr>
                     <?php foreach ($sanphams as $sanpham): ?>
                         <tr>
@@ -34,7 +35,8 @@
                             </td>
                             <td><?= $sanpham['madm'] ?></td>
                             <td><?= $sanpham['status'] ?></td>
-                            <td><a href="index.php?pg=editt&sanPham_id=<?= $sanpham['sanPham_id'] ?>" type="button"><input class="mr20" type="button" value="Sửa"></a>
+                            <td><?= $sanpham['luotxem'] ?></td>
+                            <td><a href="index.php?pg=editsp&sanPham_id=<?= $sanpham['sanPham_id'] ?>" type="button"><input class="mr20" type="button" value="Sửa"></a>
 
                                 <?php if ($sanpham['status'] == 1): ?>
                                     <a style="color: black;" type="button" href="index.php?pg=ansp&action=an&sanPham_id=<?= $sanpham['sanPham_id'] ?>">
@@ -47,15 +49,14 @@
 
                                 <?php endif; ?>
 
-                                <a onclick="return confirm('Bạn có muốn xoá không?')" href="index.php?pg=deletee&sanPham_id=<?= $sanpham['sanPham_id'] ?>" type="button"><input class="mr20" type="button" value="Xoá"></a>
+                                <a onclick="return confirm('Bạn có muốn xoá không?')" href="index.php?pg=deletesp&sanPham_id=<?= $sanpham['sanPham_id'] ?>" type="button"><input class="mr20" type="button" value="Xoá"></a>
                             </td>
-                            
                         </tr>
                     <?php endforeach ?>
                 </table>
             </div>
             <div class="row mb10 ">
-                <a href="index.php?pg=addd"> <input class="mr20" type="button" value="NHẬP THÊM"></a>
+                <a href="index.php?pg=addsp"> <input class="mr20" type="button" value="NHẬP THÊM"></a>
             </div>
         </form>
     </div>

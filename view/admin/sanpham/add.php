@@ -5,7 +5,7 @@
         <h1>THÊM MỚI SẢN PHẨM</h1>
       </div>
       <div class="row2 form_content ">
-        <form action="index.php?pg=storee" method="POST" enctype="multipart/form-data">
+        <form action="index.php?pg=storesp" method="POST" enctype="multipart/form-data">
           <div class="row2 mb10 form_content_container">
             <label> Tên Sản Phẩm </label> <br>
             <input type="text" required name="ten">

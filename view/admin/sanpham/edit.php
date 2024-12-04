@@ -54,8 +54,7 @@
           </div>
           <input type="hidden" name="sanPham_id" value="<?=$sanpham["sanPham_id"]?>">
           <div class="row mb10 ">
-            <input class="mr20" type="submit" value="THÊM MỚI">
-            <input class="mr20" type="reset" value="NHẬP LẠI">
+            <input class="mr20" type="submit" value="CẬP NHẬP">
 
             <a href="index.php?pg=sanpham&action=listt"><input class="mr20" type="button" value="DANH SÁCH"></a>
           </div>

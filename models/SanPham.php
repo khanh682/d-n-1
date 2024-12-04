@@ -12,10 +12,35 @@ class SanPham
     public function all()
     {
         $sql = "SELECT * FROM sanpham ORDER BY sanPham_id DESC";
-        $stmt = $this->conn->query($sql);
+        $stmt = $this->conn->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    public function getLatestProducts()
+{
+    $sql = "SELECT * FROM sanpham ORDER BY sanPham_id DESC LIMIT 8";
+    $stmt = $this->conn->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+    //lấy 4 sản phẩm có nhiều lượt xem nhất
+    public function getMostViewedProducts()
+{
+    $sql = "SELECT * FROM sanpham ORDER BY luotxem DESC LIMIT 4"; // Sắp xếp theo lượt xem giảm dần
+    $stmt = $this->conn->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC); // Trả về 4 sản phẩm nhiều lượt xem nhất
+}
+
+    //lấy sản phẩm theo danh mục
+    public function sanPhamInDanhMuc($madm){
+        $sql = "SELECT * FROM sanpham WHERE madm = :madm ORDER BY sanPham_id DESC LIMIT 4";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':madm', $madm, PDO::PARAM_INT); // Ràng buộc biến với giá trị
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
     //hàm insert dữ liệu
     public function insert($data)
     {
@@ -57,5 +82,11 @@ class SanPham
         $sql = "DELETE FROM sanpham WHERE sanPham_id=$sanPham_id";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
+    }
+    //Cập nhật lượt xem
+    public function updateLuotxem($sanPham_id){
+        $sql = "UPDATE sanpham SET luotxem = luotxem + 1 WHERE sanPham_id =$sanPham_id";
+        $stmt = $this->conn->prepare($sql);
+        return $stmt->execute();
     }
 }
