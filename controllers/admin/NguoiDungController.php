@@ -1,5 +1,6 @@
 <?php
 class NguoiDungController{
+    
  //Hiển thị dữ liệu
  public function list()
  {
@@ -30,41 +31,48 @@ class NguoiDungController{
     die;
  }
  
- public function login(){
-    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+ public function login() {
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $email = $_POST['email'];
         $password = $_POST['password'];
 
+        // Lấy thông tin người dùng từ database
         $nguoidung = (new NguoiDung)->getUser($email);
-        //Trường hợp đúng tài khoản
-        if($nguoidung){
-            if($nguoidung['password']==$password){
-                $_SESSION['email'] = $nguoidung;
 
-                //Điều hướng website đến admin
-                // header("Location: index.php?pg=danhmuc");
-                // die;
-                if($nguoidung['role']==0){
+        if ($nguoidung) {
+            // Kiểm tra mật khẩu
+            if ($nguoidung['password'] == $password) {
+                // Lưu thông tin vào session
+                $_SESSION['email'] = $nguoidung;
+                $_SESSION['name'] = $nguoidung['ten']; // Lưu tên người dùng
+                $_SESSION['role'] = $nguoidung['role']; // Lưu vai trò (role)
+
+                // Điều hướng người dùng
+                if ($nguoidung['role'] == 0) {
                     header('location: index.php');
-                }else if($nguoidung['role']==1){
+                } else if ($nguoidung['role'] == 1) {
                     header('location: index.php?pg=danhmuc');
-                    die;
                 }
                 die;
-            }else{ //mật khẩu không đúng
+            } else {
                 $errors['email'] = "Tài khoản hoặc mật khẩu không đúng";
             }
-        }else{
+        } else {
             $errors['email'] = "Tài khoản hoặc mật khẩu không đúng";
         }
     }
-    view("client/myaccount/login",[
-        'errors' => $errors??'',
-        'email'=>$email??''
+
+    // Hiển thị trang đăng nhập cùng thông báo lỗi (nếu có)
+    view("client/myaccount/login", [
+        'errors' => $errors ?? '',
+        'email' => $email ?? ''
     ]);
- }
+}
+
  public function logout(){
     unset($_SESSION['email']);
+    unset($_SESSION['name']);
+    unset($_SESSION['role']);
     header("Location: index.php?pg=login");
     die;
  }

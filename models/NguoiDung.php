@@ -47,10 +47,17 @@ class NguoiDung
     @method getUser: để lấy thông tin tài khoản theo tài khoản
     @param $taikhoan: tên tài khoản
     */
-    public function getUser($email){
-        $sql = "SELECT * FROM nguoidung WHERE email=:email";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute(['email'=>$email]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+  public function getUser($email) {
+    $sql = "SELECT * FROM nguoidung WHERE email = :email";
+    $stmt = $this->conn->prepare($sql);
+    $stmt->execute(['email' => $email]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$user) {
+        die("Không tìm thấy người dùng với email này."); // Debug
     }
+
+    return $user;
+}
+
 }

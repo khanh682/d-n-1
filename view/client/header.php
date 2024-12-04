@@ -41,13 +41,31 @@
             </div>
             <div class="col-lg-6 text-center text-lg-right">
                 <div class="d-inline-flex align-items-center">
-                    <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">My Account</button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a style="text-decoration: none;" href="index.php?pg=login"><button class="dropdown-item" type="button">Sign in</button></a>
-                            <button class="dropdown-item" type="button">Sign up</button>
-                        </div>
-                    </div>
+                <div class="btn-group">
+    <?php if (isset($_SESSION['name'])): ?>
+        <!-- Hiển thị tên người dùng và nút đăng xuất -->
+        <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">
+            <?= htmlspecialchars($_SESSION['name']); ?> <!-- Hiển thị tên -->
+        </button>
+        <div class="dropdown-menu dropdown-menu-right">
+            <a style="text-decoration: none;" href="index.php?pg=logout">
+                <button class="dropdown-item" type="button">Logout</button>
+            </a>
+        </div>
+    <?php else: ?>
+        <!-- Hiển thị nút đăng nhập và đăng ký -->
+        <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">My Account</button>
+        <div class="dropdown-menu dropdown-menu-right">
+            <a style="text-decoration: none;" href="index.php?pg=login">
+                <button class="dropdown-item" type="button">Sign in</button>
+            </a>
+            <a href="index.php?pg=register">
+            <button class="dropdown-item" type="button">Sign up</button>
+            </a>
+        </div>
+    <?php endif; ?>
+</div>
+
                     <div class="btn-group mx-2">
                         <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">USD</button>
                         <div class="dropdown-menu dropdown-menu-right">
@@ -115,8 +133,8 @@
                 </a>
                 <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 bg-light" id="navbar-vertical" style="width: calc(100% - 30px); z-index: 999;">
                     <div class="navbar-nav w-100">
-                    <?php foreach($danhmucs as $danhmuc): ?>
-                        <a href="" class="nav-item nav-link"><?= $danhmuc['tendm'] ?></a>
+                    <?php foreach($categories as $category): ?>
+                        <a href="" class="nav-item nav-link"><?= $category['tendm'] ?></a>
                     <?php endforeach;?>
                     </div>
                 </nav>
@@ -132,14 +150,15 @@
                     </button>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
-                            <a href="index.php" class="nav-item nav-link active">Trang chủ</a>
-                            <a href="index.php?pg=shop" class="nav-item nav-link">Cửa hàng</a>
-                            <a href="index.php?pg=detail" class="nav-item nav-link">Chi tiết cửa hàng</a>
+                        <a href="index.php" class="nav-item nav-link">Trang chủ</a>
+                          
+                   
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Trang <i class="fa fa-angle-down mt-1"></i></a>
                                 <div class="dropdown-menu bg-primary rounded-0 border-0 m-0">
-                                    <a href="index.php?pg=cart" class="dropdown-item">Giỏ hàng</a>
+                                    <a href="index.php?pg=addcart" class="dropdown-item">Giỏ hàng</a>
                                     <a href="index.php?pg=checkout" class="dropdown-item">Thanh toán</a>
+                                    <a href="index.php?pg=thanhtoan" class="dropdown-item">Đơn hàng</a>
                                 </div>
                             </div>
                             <a href="index.php?pg=contact" class="nav-item nav-link">Liên hệ</a>

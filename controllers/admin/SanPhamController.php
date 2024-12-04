@@ -100,4 +100,5 @@ class SanPhamController
         header("Location: index.php?pg=sanpham&action=list");
         die;
     }
+
 }

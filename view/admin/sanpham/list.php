@@ -19,6 +19,7 @@
                         <th>HÌNH ẢNH</th>
                         <th>ID DM</th>
                         <th>ẨN/HIỆN</th>
+                        <th>LƯỢT XEM</th>
                     </tr>
                     <?php foreach ($sanphams as $sanpham): ?>
                         <tr>
@@ -34,6 +35,7 @@
                             </td>
                             <td><?= $sanpham['madm'] ?></td>
                             <td><?= $sanpham['status'] ?></td>
+                            <td><?= $sanpham['luotxem'] ?></td>
                             <td><a href="index.php?pg=editsp&sanPham_id=<?= $sanpham['sanPham_id'] ?>" type="button"><input class="mr20" type="button" value="Sửa"></a>
 
                                 <?php if ($sanpham['status'] == 1): ?>
@@ -49,7 +51,6 @@
 
                                 <a onclick="return confirm('Bạn có muốn xoá không?')" href="index.php?pg=deletesp&sanPham_id=<?= $sanpham['sanPham_id'] ?>" type="button"><input class="mr20" type="button" value="Xoá"></a>
                             </td>
-                            
                         </tr>
                     <?php endforeach ?>
                 </table>

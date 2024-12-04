@@ -27,6 +27,7 @@
                     <li><a href="index.php?pg=danhmuc&action=list">Danh mục</a></li>
                     <li><a href="index.php?pg=sanpham&action=list">Hàng hóa</a></li>
                     <li><a href="index.php?pg=nguoidung&action=list">Khách hàng</a></li>
+                    <li><a href="index.php?pg=donhang">Đơn Hàng</a></li>
                     <li><a href="">Bình luận</a></li>
                     <li><a href="">Thống kê</a></li>
                 </ul>
