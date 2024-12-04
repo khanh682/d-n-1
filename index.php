@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(!isset($_SESSION['giohang'])) $_SESSION['giohang']=[];
+if (!isset($_SESSION['giohang'])) $_SESSION['giohang'] = [];
 // Commons
 require_once "commons/env.php";
 require_once "commons/function.php";
@@ -26,7 +26,7 @@ $madm = $_GET['madm'] ?? null;
 
 switch ($pg) {
     case '':
-       (new HomeController)->homedm();
+        (new HomeController)->homedm();
         break;
     case 'contact':
         include "./view/client/contact.php";
@@ -39,35 +39,35 @@ switch ($pg) {
         break;
     case "addcart":
         //lấy dữ liệu từ form để lưu vào giỏ hàng
-        if(isset($_POST['addtocart'])&&($_POST['addtocart'])){
-            $sanPham_id=$_POST['sanPham_id'];
-            $anh=$_POST['anh'];
-            $ten=$_POST['ten'];
-            $gia=$_POST['gia'];
-            if(isset($_POST['sl']) && ($_POST['sl']>0)){
+        if (isset($_POST['addtocart']) && ($_POST['addtocart'])) {
+            $sanPham_id = $_POST['sanPham_id'];
+            $anh = $_POST['anh'];
+            $ten = $_POST['ten'];
+            $gia = $_POST['gia'];
+            if (isset($_POST['sl']) && ($_POST['sl'] > 0)) {
                 $sl = $_POST['sl'];
-            }else{
-                $sl=1;
+            } else {
+                $sl = 1;
             }
-            $fg=0;
+            $fg = 0;
             //kiểm tra sản phẩm có tồn tại trong giỏ hàng hay không?
             //Nếu có chỉ cập nhật lại số lượng
-            $i=0;
-            foreach($_SESSION['giohang'] as  $item){
-                if($item[2]===$ten){
-                    $slnew=$sl+$item[4];
-                    $_SESSION['giohang'][$i][4]=$slnew;
-                    $fg=1;
+            $i = 0;
+            foreach ($_SESSION['giohang'] as  $item) {
+                if ($item[2] === $ten) {
+                    $slnew = $sl + $item[4];
+                    $_SESSION['giohang'][$i][4] = $slnew;
+                    $fg = 1;
                     break;
                 }
-            $i++;
+                $i++;
             }
             //Còn ngược lại add mới sp vào giỏ hàng
 
             //khởi tạo 1 mảng con trước khi đưa vào giỏ hàng
-            if($fg==0){
-                $item=[$sanPham_id,$anh,$ten,$gia,$sl];
-                $_SESSION['giohang'][]=$item;
+            if ($fg == 0) {
+                $item = [$sanPham_id, $anh, $ten, $gia, $sl];
+                $_SESSION['giohang'][] = $item;
             }
             header('location: index.php?pg=addcart');
         }
@@ -77,15 +77,15 @@ switch ($pg) {
         (new ClientProductController)->cart();
         break;
     case 'delcart':
-        if(isset($_GET['i'])&&($_GET['i']>0)){
-            if(isset($_SESSION['giohang'])&&(count($_SESSION['giohang'])>0))
-            array_splice($_SESSION['giohang'],$_GET['i'],1);
-        }else{
-            if(isset($_SESSION['giohang'])) unset($_SESSION['giohang']);
+        if (isset($_GET['i']) && ($_GET['i'] > 0)) {
+            if (isset($_SESSION['giohang']) && (count($_SESSION['giohang']) > 0))
+                array_splice($_SESSION['giohang'], $_GET['i'], 1);
+        } else {
+            if (isset($_SESSION['giohang'])) unset($_SESSION['giohang']);
         }
-        if(isset($_SESSION['giohang'])&&(count($_SESSION['giohang'])>0)){
+        if (isset($_SESSION['giohang']) && (count($_SESSION['giohang']) > 0)) {
             header('location: index.php?pg=addcart');
-        }else{
+        } else {
             header('location: index.php');
         }
         break;
@@ -93,25 +93,25 @@ switch ($pg) {
         include "./view/client/checkout.php";
         break;
     case "thanhtoan":
-        if((isset($_POST['thanhtoan']))&&($_POST['thanhtoan'])){
+        if ((isset($_POST['thanhtoan'])) && ($_POST['thanhtoan'])) {
             //lấy dữ liệu
-            $tongGia=$_POST['tongGia'];
-            $name=$_POST['name'];
-            $address=$_POST['address'];
-            $email=$_POST['email'];
-            $tel=$_POST['tel'];
-            $pttt=$_POST['pttt'];
-            $madh="LOINUNA".rand(0,999999);
+            $tongGia = $_POST['tongGia'];
+            $name = $_POST['name'];
+            $address = $_POST['address'];
+            $email = $_POST['email'];
+            $tel = $_POST['tel'];
+            $pttt = $_POST['pttt'];
+            $madh = "LOINUNA" . rand(0, 999999);
             //tạo đơn hàng
             //và trả về 1 id đơn hàng
             // $item=[$sanPham_id,$anh,$ten,$gia,$sl];
-            $iddh=taodonhang($madh,$tongGia,$pttt,$name,$address,$email,$tel );
-            $_SESSION['iddh']=$iddh;
-            if(isset($_SESSION['giohang'])&&(count($_SESSION['giohang'])>0)){
-            foreach($_SESSION['giohang'] as $item){
-                addtocart($iddh,$item[0],$item[1],$item[2],$item[3],$item[4]);
-            }
-            unset($_SESSION['giohang']);
+            $iddh = taodonhang($madh, $tongGia, $pttt, $name, $address, $email, $tel);
+            $_SESSION['iddh'] = $iddh;
+            if (isset($_SESSION['giohang']) && (count($_SESSION['giohang']) > 0)) {
+                foreach ($_SESSION['giohang'] as $item) {
+                    addtocart($iddh, $item[0], $item[1], $item[2], $item[3], $item[4]);
+                }
+                unset($_SESSION['giohang']);
             }
         }
         include "./view/client/order.php";
@@ -196,4 +196,3 @@ switch ($pg) {
         echo "404 FILE NOT FOUND!";
         break;
 }
-?>
