@@ -12,6 +12,7 @@
     </div>
 </div>
 <!-- Breadcrumb End -->
+ <input type="hidden" name="userProduct" value="<?php echo htmlspecialchars($_SESSION['email']['nguoiDung_id'] ?? ''); ?>">
 
 
 <!-- Shop Detail Start -->
@@ -44,9 +45,7 @@
                         <small class="pt-1">(99 Reviews)</small>
                     </div>
                     <h3 class="font-weight-semi-bold mb-4">$<?= $sanpham['gia'] ?></h3>
-                    <p class="mb-4">Volup erat ipsum diam elitr rebum et dolor. Est nonumy elitr erat diam stet sit
-                        clita ea. Sanc ipsum et, labore clita lorem magna duo dolor no sea
-                        Nonumy</p>
+                    
 
 
                     <div class="d-flex align-items-center mb-4 pt-2">

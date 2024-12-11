@@ -12,24 +12,32 @@
                         <th>ID</th>
                         <th>MÃ ĐH</th>
                         <th>TỔNG GIÁ</th>
-                        <th>PTT</th>
                         <th>NAME</th>
                         <th>ADDRESS</th>
                         <th>EMAIL</th>
                         <th>TEL</th>
                         <th>ID USER</th>
+                        <th>TRẠNG THÁI</th>
+                        <th>TIME</th>
+                        <th>Hành động</th>
                     </tr>
                     <?php foreach ($donhangs as $donhang): ?>
                         <tr>
                             <td><?= $donhang['donHang_id'] ?></td>
                             <td><?= $donhang['madh'] ?></td>
                             <td><?= $donhang['tongGia'] ?></td>
-                            <td><?= $donhang['pttt'] ?></td>
                             <td><?= $donhang['name'] ?></td>
                             <td><?= $donhang['address'] ?></td>
                             <td><?= $donhang['email'] ?></td>
                             <td><?= $donhang['tel'] ?></td>
                             <td><?= $donhang['nguoiDung_id'] ?></td>
+                            <td><?= $donhang['status'] ?></td>
+                            <td><?= $donhang['ngayTao'] ?></td>
+                            <td class="text-center align-middle">
+                            <a href="./?pg=detailCart&id=<?php echo htmlspecialchars($donhang['donHang_id']); ?>" class="btn btn-info" style="width:70px">
+                                <i class="fa-solid fa-eye"></i>
+                            </a>
+                        </td>
                         </tr>
                     <?php endforeach ?>
                 </table>
