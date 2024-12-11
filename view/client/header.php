@@ -15,6 +15,7 @@
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
@@ -62,9 +63,11 @@
             <a href="index.php?pg=register">
             <button class="dropdown-item" type="button">Sign up</button>
             </a>
-        </div>
+            </div>
     <?php endif; ?>
 </div>
+<a href="index.php?pg=listcart&id=<?php echo htmlspecialchars($_SESSION['email']['nguoiDung_id'] ?? ''); ?>"><button class="dropdon-item" type="button">Lịch sử mua hàng</button></a>
+
 
                     <div class="btn-group mx-2">
                         <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">USD</button>

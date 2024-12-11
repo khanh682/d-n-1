@@ -18,6 +18,7 @@ require_once "controllers/admin/NguoiDungController.php";
 require_once "controllers/client/HomeController.php";
 require_once "controllers/client/ClientProductController.php";
 require_once "controllers/admin/DonHangController.php";
+require_once "controllers/client/OrderController.php";
 
 // Safely handle the 'pg' parameter
 $pg = $_GET["pg"] ?? ""; // Default to empty string if 'pg' is not set
@@ -37,6 +38,9 @@ switch ($pg) {
     case "detail1":
         (new ClientProductController)->show($madm);
         break;
+    case "ordersuccess":
+        include "./view/client/ordersuccess.php";
+        break;
     case "addcart":
         //lấy dữ liệu từ form để lưu vào giỏ hàng
         if (isset($_POST['addtocart']) && ($_POST['addtocart'])) {
@@ -44,6 +48,7 @@ switch ($pg) {
             $anh = $_POST['anh'];
             $ten = $_POST['ten'];
             $gia = $_POST['gia'];
+            var_dump($_POST);
             if (isset($_POST['sl']) && ($_POST['sl'] > 0)) {
                 $sl = $_POST['sl'];
             } else {
@@ -93,29 +98,53 @@ switch ($pg) {
         include "./view/client/checkout.php";
         break;
     case "thanhtoan":
-        if ((isset($_POST['thanhtoan'])) && ($_POST['thanhtoan'])) {
-            //lấy dữ liệu
-            $tongGia = $_POST['tongGia'];
-            $name = $_POST['name'];
-            $address = $_POST['address'];
-            $email = $_POST['email'];
-            $tel = $_POST['tel'];
-            $pttt = $_POST['pttt'];
-            $madh = "LOINUNA" . rand(0, 999999);
-            //tạo đơn hàng
-            //và trả về 1 id đơn hàng
-            // $item=[$sanPham_id,$anh,$ten,$gia,$sl];
-            $iddh = taodonhang($madh, $tongGia, $pttt, $name, $address, $email, $tel);
-            $_SESSION['iddh'] = $iddh;
-            if (isset($_SESSION['giohang']) && (count($_SESSION['giohang']) > 0)) {
-                foreach ($_SESSION['giohang'] as $item) {
-                    addtocart($iddh, $item[0], $item[1], $item[2], $item[3], $item[4]);
-                }
-                unset($_SESSION['giohang']);
-            }
-        }
-        include "./view/client/order.php";
+        (new DonHangController)->showOrderDetails();
         break;
+        // $Order->showOrderDetails();
+        // if ((isset($_POST['thanhtoan'])) && ($_POST['thanhtoan'])) {
+        //     //lấy dữ liệu
+        //     $tongGia = $_POST['tongGia'];
+        //     $name = $_POST['name'];
+        //     $address = $_POST['address'];
+        //     $email = $_POST['email'];
+        //     $tel = $_POST['tel'];
+        //     $pttt = $_POST['pttt'];
+        //     $madh = "LOINUNA" . rand(0, 999999);
+        //     //tạo đơn hàng
+        //     //và trả về 1 id đơn hàng
+        //     // $item=[$sanPham_id,$anh,$ten,$gia,$sl];
+        //     $nguoiDung_id = $_POST['nguoiDung_id'];
+        //     if (isset($_POST['thanhtoan'])) {
+        //         echo "<pre>";
+        //         print_r($_POST);
+        //         echo "</pre>";
+        //     }
+            
+        //     // var_dump($_POST);die;
+        //     try {
+        //         $donHang_id = taodonhang($madh, $tongGia, $pttt, $name, $address, $email, $tel, $nguoiDung_id);
+        //         if ($donHang_id) {
+        //             echo "Đơn hàng được tạo thành công. ID: " . $donHang_id;
+        //         } else {
+        //             echo "Đơn hàng không được tạo. Kiểm tra hàm taodonhang.";
+        //         }
+        //     } catch (Exception $e) {
+        //         echo "Lỗi trong quá trình tạo đơn hàng: " . $e->getMessage();
+        //     }
+        //                 // var_dump($donHang_id); die;
+        //     // $_SESSION['donHang_id'] = $donHang_id;
+        //     // (isset($_SESSION['giohang']) && (count($_SESSION['giohang']) > 0)) {
+        //     //     foreach ($_SESSION['giohang'] as $item) {
+        //     //         // Truyền đúng tham số: $sanPham_id, $gia, $soLuong
+        //     //         addtoorder($donHang_id, $item[0], 0, $item[1], $item[2]);
+        //     //     }
+        //     //     // Xóa giỏ hàng sau khi đặt hàng xong
+        //     //     unset($_SESSION['giohang']);
+        //     // }
+            
+        // }
+        // include "./view/client/order.php";
+        // break;
     case "danhmuc":
         (new DanhMucController)->list();
         break;
@@ -190,7 +219,28 @@ switch ($pg) {
         (new NguoiDungController)->logout();
         break;
     case "donhang":
-        (new DonHangController)->list();
+        (new OrderController)->list();
+        break;
+    case "detailCart":
+        if (isset($_GET['id'])) {
+            (new OrderController)->detail($_GET['id']);
+        }
+        break;
+    case "updateStatus":
+        (new OrderController)->updateStatus();
+        break;
+    case "listcart":
+        if (isset($_GET['id'])) {
+            (new DonHangController)->listcart($_GET['id']);
+        }
+        break;
+    case "detailcart":
+        if (isset($_GET['id'])) {
+        (new DonHangController)->detailcart($_GET['id']);
+        }
+        break;
+    case "submitCancel_order":
+        (new DonHangController)->submitCancel_order();
         break;
     default:
         echo "404 FILE NOT FOUND!";
